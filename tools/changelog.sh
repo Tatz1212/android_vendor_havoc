@@ -24,7 +24,10 @@ k=$(expr $i - 1)
 	echo >> $Changelog;
 
 	# Cycle through every repo to find commits between 2 dates
-	repo forall -pc 'git log --oneline --after=$After_Date --until=$Until_Date' >> $Changelog
+	while read path;
+		do
+		git --git-dir ./${path}/.git log --oneline --after=$After_Date --until=$Until_Date >> $Changelog
+	done < ./.repo/project.list;
 	echo >> $Changelog;
 done
 
